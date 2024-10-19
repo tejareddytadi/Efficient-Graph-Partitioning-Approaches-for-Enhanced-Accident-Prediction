@@ -1,0 +1,555 @@
+
+
+
+
+A graph is denoted by a pair G=(V,E) where V is set of vertices and E is the set of edges.E express relationship between a pair of vertices(vi,vj). In context of traffic prediction Edges(E) are the  roads connecting different nodes(V) in the city.Graph partitioning works to divide the set of vertices V into disjoint partitions such that computational load is balanced. graph partitioning plays a major role in optimizing the performance of traffic prediction models working with large graph networks. Later, in this section we briefly discuss the prominent graph partitioning techniques.
+
+Metis
+
+METIS is a software package for partitioning large irregular graphs.METIS is a multilevel k-way partitioning technique, METIS algorithm reduces the graphs size by collapsing the vertices and edges in coarsening stage and  performing k-way partition on the reduced graph then uncoarsen it to construct partitions for the initial graph G. During refinement phase, the focus is on optimizing the region of the graph near partition boundary.
+
+
+
+Girvan-Newman 
+The Girvan-Newman algorithm is a Community detection method ( hierarchical - clustering) that unremittingly discards edges that serve as a bridge between these objects (nodes).Thus leading to communities ( densely connected subcomponents).The Girvan-Newman technique works by finding the edges that have the highest centrality and iteratively eliminating these edges to produce communities. Hence it employs edge betweenness as its metrics to perceive the significance of edges that connect nodes within a graph 
+
+
+node loss:
+node loss refres to loss in the nodes after the partitioning the initial graph. it s calculated as the difference between the total nodes in the initial graph and the total nodes in all subgraphs , divided by the total nodes in the initial graph .
+
+edge loss:
+edge loss refres to the reduction of edges after the partitoining the initial graph. it is calculated as the difference between total edges in the initial graph and the total edges in all subgraphs, divided by the total edges in the initial graph. a lower edge loss value is desirable as it results in more effective partition.
+
+
+we utilized three datasets  
+
+
+miami metis: 10 
+Sum of nodes : 8461
+Node loss : 0.0
+Edge loss : 0.01601357833370231
+Balance : 1.0686965651717413
+Cut Size: 217
+
+dgl 15
+sum of nodes : 8461
+node loss : 0.0
+edge loss : -0.9461294369419231
+Balance : 1.0124374336417412
+
+dallas
+metis k=15
+Sum of nodes : 36150
+Node loss : 0.0
+Edge loss : 0.008214833030400229
+Balance : 1.0688682465817416
+Cut Size: 461
+
+dataset selection:
+for this study, road network datasets of three different locations were considered to evaluate various graph partition techniques. datasets were taken from the research paper. datasets with  differnet node sizes were considered to ensure extensive evaluation of the graph partitioning algorithms.
+
+
+expperiments :
+This section gives the destails of the experiments conduxted to evaluate the effectiveness of the various graph partitioning techniques. the goal was to judge the performance of theses techniques with various metrics.
+
+experimental procedure:
+Distinct Graph partitioning techniques and clustering techniques(METIS, Jabeja, random partitioning, Girvan-Newman, Asynchronous Fluid Communities Detection) are applied to the road network dataset of three cities(Houston, Dallas, Miami). inorder to evaluate the results obtained node loss, edge loss ,balance metrics are used to measure the quality of partitoins
+
+
+results:
+miami:
+k=10
+Partition 0: 859 nodes
+Partition 1: 827 nodes
+Partition 2: 843 nodes
+Partition 3: 867 nodes
+Partition 4: 862 nodes
+Partition 5: 837 nodes
+Partition 6: 835 nodes
+Partition 7: 821 nodes
+Partition 8: 842 nodes
+Partition 9: 868 nodes
+Total partitioned nodes: 8461 out of 8461 total nodes
+Sum of nodes : 8461
+Node loss : 0.0
+Edge loss : 0.015498057223595903
+Edge Balance : 1.1445485939812532
+Node Balance :1.0258834653114288
+average nodes in partition :846.1
+average edges in partition :2229.7
+Partitioning time: 0.7796757221221924 seconds
+Cut Size: 217
+
+k=30
+Partition 0: 273 nodes
+Partition 1: 283 nodes
+Partition 2: 285 nodes
+Partition 3: 281 nodes
+Partition 4: 279 nodes
+Partition 5: 288 nodes
+Partition 6: 283 nodes
+Partition 7: 280 nodes
+Partition 8: 290 nodes
+
+
+Sum of nodes : 8461
+Node loss : 0.0
+Edge loss : 0.03399858707170611
+Edge Balance : 1.2341164640277904
+Node Balance :1.0282472520978607
+average nodes in partition :282.03333333333336
+average edges in partition :729.2666666666667
+Partitioning time: 0.35006237030029297 seconds
+Cut Size: 466
+
+
+k=50
+ 34: 167 nodes
+
+
+Sum of nodes : 8461
+Node loss : 0.0
+Edge loss : 0.04724478982691628
+Edge Balance : 1.2767633700991752
+Node Balance :1.0282472520978607
+average nodes in partition :169.22
+average edges in partition :431.56
+Partitioning time: 0.41959619522094727 seconds
+Cut Size: 640
+
+
+k=100
+Sum of nodes : 8461
+Node loss : 0.0
+Edge loss : 0.07687212998940304
+Edge Balance : 1.310565839192615
+Node Balance :1.0282472520978607
+average nodes in partition :84.61
+average edges in partition :209.07
+Partitioning time: 0.6133060455322266 seconds
+Cut Size: 1028
+
+
+dgl metis 
+miami
+k=10
+Convert a graph into a bidirected graph: 0.001 seconds, peak memory: 8.244 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 8.244 GB
+Metis partitioning: 0.006 seconds, peak memory: 8.244 GB
+Reshuffle nodes and edges: 0.003 seconds
+Split the graph: 0.006 seconds
+Construct subgraphs: 0.011 seconds
+sum of nodes : 8461
+sum of edges : 17871
+node loss : 0.0
+edge loss : 0.21092370187213
+edge Balance : 1.0486262660175705
+node Balance : 1.112161683016192
+average nodes in partitions : 846.1
+average edges in partition :1787.1
+
+k=30
+Convert a graph into a bidirected graph: 0.002 seconds, peak memory: 8.264 GB
+Construct multi-constraint weights: 0.007 seconds, peak memory: 8.264 GB
+Metis partitioning: 0.016 seconds, peak memory: 8.264 GB
+Reshuffle nodes and edges: 0.003 seconds
+Split the graph: 0.009 seconds
+Construct subgraphs: 0.062 seconds
+sum of nodes : 8461
+sum of edges : 16692
+node loss : 0.0
+edge loss : 0.26298127870010596
+edge Balance : 1.1089144500359454
+node Balance : 1.159437418744829
+average nodes in partitions : 282.03333333333336
+average edges in partition :556.4
+
+k=50
+Convert a graph into a bidirected graph: 0.002 seconds, peak memory: 8.275 GB
+Construct multi-constraint weights: 0.001 seconds, peak memory: 8.275 GB
+Metis partitioning: 0.017 seconds, peak memory: 8.275 GB
+Reshuffle nodes and edges: 0.003 seconds
+Split the graph: 0.030 seconds
+Construct subgraphs: 0.197 seconds
+sum of nodes : 8461
+sum of edges : 16186
+node loss : 0.0
+edge loss : 0.2853232073472271
+edge Balance : 1.1862103052020263
+node Balance : 1.317811133435764
+average nodes in partitions : 169.22
+average edges in partition :323.72
+
+k=100
+Convert a graph into a bidirected graph: 0.006 seconds, peak memory: 8.275 GB
+Construct multi-constraint weights: 0.003 seconds, peak memory: 8.275 GB
+Metis partitioning: 0.040 seconds, peak memory: 8.275 GB
+Reshuffle nodes and edges: 0.003 seconds
+Split the graph: 0.011 seconds
+Construct subgraphs: 0.139 seconds
+sum of nodes : 8461
+sum of edges : 14852
+node loss : 0.0
+edge loss : 0.3442246555987284
+edge Balance : 1.2860220845677348
+node Balance : 1.3591774021983216
+average nodes in partitions : 84.61
+average edges in partition :148.52
+
+
+
+**updated****
+
+
+*Dallas**********
+k=30
+Sum of nodes : 36150
+Node loss : 0.0
+Edge loss : 0.011814007883224325
+Edge Balance : 1.196291791314639
+Node Balance :1.0290456431535269
+average nodes in partition :1205.0
+average edges in partition :3041.9
+Partitioning time: 1.8361599445343018 seconds
+Cut Size: 777
+
+k=60
+Sum of nodes : 36150
+Node loss : 0.0
+Edge loss : 0.01822454195001516
+Edge Balance : 1.2567142778359897
+Node Balance :1.0290456431535269
+average nodes in partition :602.5
+average edges in partition :1511.0833333333333
+Partitioning time: 1.8440792560577393 seconds
+Cut Size: 1149
+
+k=100
+Sum of nodes : 36150
+Node loss : 0.0
+Edge loss : 0.02627019534803136
+Edge Balance : 1.2655412468583884
+Node Balance :1.0290456431535269
+average nodes in partition :361.5
+average edges in partition :899.22
+Partitioning time: 1.8443408012390137 seconds
+Cut Size: 1649
+
+k=150
+Sum of nodes : 36150
+Node loss : 0.0
+Edge loss : 0.034294191536362456
+Edge Balance : 1.2362498738520538
+Node Balance :1.0290456431535269
+average nodes in partition :241.0
+average edges in partition :594.54
+Partitioning time: 1.3514397144317627 seconds
+Cut Size: 2120
+
+
+k=200
+Sum of nodes: 36150
+Sum of nodes: 36150
+Node loss: 0.0
+Edge loss: 0.040228266990080995
+Edge Balance: 1.3651800119594282
+Node Balance: 1.0290456431535269
+Average nodes in partition: 180.75
+Average edges in partition: 443.165
+Partitioning time: 2.030893325805664 seconds
+Cut Size: 2462
+
+
+
+dgl metis 
+
+k=30
+Convert a graph into a bidirected graph: 0.007 seconds, peak memory: 3.943 GB
+Construct multi-constraint weights: 0.078 seconds, peak memory: 3.943 GB
+Metis partitioning: 0.035 seconds, peak memory: 3.943 GB
+Reshuffle nodes and edges: 0.046 seconds
+Split the graph: 0.029 seconds
+Construct subgraphs: 0.095 seconds
+sum of nodes : 36150
+sum of edges : 75669
+node loss : 0.0
+edge loss : 0.18061030016892624
+edge Balance : 1.041509733180034
+node Balance : 1.1004149377593362
+average nodes in partitions : 1205.0
+average edges in partition :2522.3
+
+k=60
+Convert a graph into a bidirected graph: 0.007 seconds, peak memory: 4.056 GB
+Construct multi-constraint weights: 0.001 seconds, peak memory: 4.056 GB
+Metis partitioning: 0.036 seconds, peak memory: 4.056 GB
+Reshuffle nodes and edges: 0.011 seconds
+Split the graph: 0.029 seconds
+Construct subgraphs: 0.067 seconds
+sum of nodes : 36150
+sum of edges : 74231
+node loss : 0.0
+edge loss : 0.19618183393251615
+edge Balance : 1.0806805781950937
+node Balance : 1.1817427385892116
+average nodes in partitions : 602.5
+average edges in partition :1237.1833333333334
+
+k=100
+Convert a graph into a bidirected graph: 0.009 seconds, peak memory: 4.056 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 4.056 GB
+Metis partitioning: 0.050 seconds, peak memory: 4.056 GB
+Reshuffle nodes and edges: 0.014 seconds
+Split the graph: 0.034 seconds
+Construct subgraphs: 0.107 seconds
+sum of nodes : 36150
+sum of edges : 73708
+node loss : 0.0
+edge loss : 0.20184519426517086
+edge Balance : 1.1314918326368915
+node Balance : 1.255878284923928
+average nodes in partitions : 361.5
+average edges in partition :737.08
+
+k=150
+Convert a graph into a bidirected graph: 0.009 seconds, peak memory: 4.124 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 4.124 GB
+Metis partitioning: 0.056 seconds, peak memory: 4.124 GB
+Reshuffle nodes and edges: 0.013 seconds
+Split the graph: 0.033 seconds
+Construct subgraphs: 0.150 seconds
+sum of nodes : 36150
+sum of edges : 73000
+node loss : 0.0
+edge loss : 0.20951184649369775
+edge Balance : 1.1301369863013697
+node Balance : 1.2531120331950207
+average nodes in partitions : 241.0
+average edges in partition :486.6666666666667
+
+k=200
+Convert a graph into a bidirected graph: 0.009 seconds, peak memory: 4.124 GB
+Construct multi-constraint weights: 0.001 seconds, peak memory: 4.124 GB
+Metis partitioning: 0.063 seconds, peak memory: 4.124 GB
+Reshuffle nodes and edges: 0.014 seconds
+Split the graph: 0.036 seconds
+Construct subgraphs: 0.195 seconds
+sum of nodes : 36150
+sum of edges : 70709
+node loss : 0.0
+edge loss : 0.2343201801879846
+edge Balance : 1.1907960797069679
+node Balance : 1.3001383125864454
+average nodes in partitions : 180.75
+average edges in partition :353.545
+
+
+****updated****
+
+
+
+
+
+*****houston******
+
+pyg 
+k=100
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.01723547540235133
+Edge Balance: 1.322675411628066
+Node Balance: 1.0299609787141397
+Average nodes in partition: 597.11
+Average edges in partition: 1463.7
+Partitioning time: 7.090145826339722 seconds
+Cut Size: 1837
+
+k=150
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.023016443194102204
+Edge Balance: 1.2762097189864545
+Node Balance: 1.0299609787141397
+Average nodes in partition: 398.0733333333333
+Average edges in partition: 970.06
+Partitioning time: 2.190654754638672 seconds
+Cut Size: 2408
+
+
+k=200 
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.028287128114571933
+Edge Balance: 1.3252812249523231
+Node Balance: 1.0282862454154176
+Average nodes in partition: 298.555
+Average edges in partition: 723.62
+Partitioning time: 3.351947069168091 seconds
+Cut Size: 2902
+
+k=250
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.032416390822965414
+Edge Balance: 1.3930427662394436
+Node Balance: 1.0299609787141397
+Average nodes in partition: 238.844
+Average edges in partition: 576.436
+Partitioning time: 3.207077741622925 seconds
+Cut Size: 3280
+
+
+
+k=300
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.03534380308452567
+Edge Balance: 1.3906579524336513
+Node Balance: 1.0299609787141397
+Average nodes in partition: 199.03666666666666
+Average edges in partition: 478.91
+Partitioning time: 6.255529403686523 seconds
+Cut Size: 3609
+
+
+k=350
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.03897621141825067
+Edge Balance: 1.388927703099237
+Node Balance: 1.0257741454673344
+Average nodes in partition: 170.60285714285715
+Average edges in partition: 408.9485714285714
+Partitioning time: 3.044119358062744 seconds
+Cut Size: 3945
+
+k=400
+Sum of nodes: 59711
+Node loss: 0.0
+Edge loss: 0.04253476302060603
+Edge Balance: 1.3800647957251653
+Node Balance: 1.0249367788179733
+Average nodes in partition: 149.2775
+Average edges in partition: 356.505
+Partitioning time: 4.065712928771973 seconds
+Cut Size: 4320
+
+
+dgl
+k=100
+Convert a graph into a bidirected graph: 0.017 seconds, peak memory: 4.085 GB
+Construct multi-constraint weights: 0.011 seconds, peak memory: 4.085 GB
+Metis partitioning: 0.106 seconds, peak memory: 4.085 GB
+Reshuffle nodes and edges: 0.030 seconds
+Split the graph: 0.105 seconds
+Construct subgraphs: 0.170 seconds
+sum of nodes : 59711
+sum of edges : 125523
+node loss : 0.0
+edge loss : 0.15720740984443088
+edge Balance : 1.0866534419986775
+node Balance : 1.1706385758068028
+average nodes in partitions : 597.11
+average edges in partition :1255.23
+
+k=150
+Convert a graph into a bidirected graph: 0.015 seconds, peak memory: 4.087 GB
+Construct multi-constraint weights: 0.007 seconds, peak memory: 4.087 GB
+Metis partitioning: 0.111 seconds, peak memory: 4.087 GB
+Reshuffle nodes and edges: 0.027 seconds
+Split the graph: 0.081 seconds
+Construct subgraphs: 0.227 seconds
+sum of nodes : 59711
+sum of edges : 124159
+node loss : 0.0
+edge loss : 0.16636564453426617
+edge Balance : 1.1018129978495317
+node Balance : 1.190735375391469
+average nodes in partitions : 398.0733333333333
+average edges in partition :827.7266666666667
+
+
+k=200
+Convert a graph into a bidirected graph: 0.011 seconds, peak memory: 4.246 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 4.246 GB
+Metis partitioning: 0.087 seconds, peak memory: 4.246 GB
+Reshuffle nodes and edges: 0.018 seconds
+Split the graph: 0.051 seconds
+Construct subgraphs: 0.199 seconds
+sum of nodes : 59711
+sum of edges : 123763
+node loss : 0.0
+edge loss : 0.1690244868635732
+edge Balance : 1.1150343802267235
+node Balance : 1.182361708897858
+average nodes in partitions : 298.555
+average edges in partition :618.815
+
+k=250
+Convert a graph into a bidirected graph: 0.012 seconds, peak memory: 4.254 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 4.254 GB
+Metis partitioning: 0.094 seconds, peak memory: 4.256 GB
+Reshuffle nodes and edges: 0.019 seconds
+Split the graph: 0.051 seconds
+Construct subgraphs: 0.242 seconds
+sum of nodes : 59711
+sum of edges : 122261
+node loss : 0.0
+edge loss : 0.17910928781968213
+edge Balance : 1.1144191524688984
+node Balance : 1.247676307548023
+average nodes in partitions : 238.844
+average edges in partition :489.044
+
+k=300
+Convert a graph into a bidirected graph: 0.025 seconds, peak memory: 4.298 GB
+Construct multi-constraint weights: 0.001 seconds, peak memory: 4.298 GB
+Metis partitioning: 0.239 seconds, peak memory: 4.298 GB
+Reshuffle nodes and edges: 0.049 seconds
+Split the graph: 0.186 seconds
+Construct subgraphs: 0.575 seconds
+sum of nodes : 59711
+sum of edges : 120727
+node loss : 0.0
+edge loss : 0.1894089447215937
+edge Balance : 1.1505297075219296
+node Balance : 1.3062919730032994
+average nodes in partitions : 199.03666666666666
+average edges in partition :402.42333333333335
+
+k=350
+Convert a graph into a bidirected graph: 0.012 seconds, peak memory: 4.381 GB
+Construct multi-constraint weights: 0.001 seconds, peak memory: 4.381 GB
+Metis partitioning: 0.114 seconds, peak memory: 4.381 GB
+Reshuffle nodes and edges: 0.019 seconds
+Split the graph: 0.063 seconds
+Construct subgraphs: 1.676 seconds
+sum of nodes : 59711
+sum of edges : 120191
+node loss : 0.0
+edge loss : 0.19300778181378703
+edge Balance : 1.1619006414789792
+node Balance : 1.3071293396526602
+average nodes in partitions : 170.60285714285715
+average edges in partition :343.40285714285716
+
+k=400
+Convert a graph into a bidirected graph: 0.012 seconds, peak memory: 4.381 GB
+Construct multi-constraint weights: 0.002 seconds, peak memory: 4.381 GB
+Metis partitioning: 0.115 seconds, peak memory: 4.381 GB
+Reshuffle nodes and edges: 0.018 seconds
+Split the graph: 0.056 seconds
+Construct subgraphs: 0.355 seconds
+sum of nodes : 59711
+sum of edges : 119536
+node loss : 0.0
+edge loss : 0.19740561445443375
+edge Balance : 1.1778878329540892
+node Balance : 1.2928941066135218
+average nodes in partitions : 149.2775
+average edges in partition :298.84
+
+
+
+
+
